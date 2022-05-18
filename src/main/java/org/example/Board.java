@@ -4,7 +4,24 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Board {
+    public int[][] getvBoard() {
+        return vBoard;
+    }
+
+    public void setvBoard(int[][] vBoard) {
+        this.vBoard = vBoard;
+    }
+
     private int [][] vBoard = new int[10][10];
+
+    public int[][] getInBoard() {
+        return inBoard;
+    }
+
+    public void setInBoard(int[][] inBoard) {
+        this.inBoard = inBoard;
+    }
+
     private int [][] inBoard = new int[10][10];
 
     public boolean playMove()
