@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">minesweeper</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.util.Random;
+import java.util.Scanner;
+
+<span class="fc" id="L6">public class Board {</span>
+    public int[][] getvBoard() {
+<span class="fc" id="L8">        return vBoard;</span>
+    }
+
+    public void setvBoard(int[][] vBoard) {
+<span class="fc" id="L12">        this.vBoard = vBoard;</span>
+<span class="fc" id="L13">    }</span>
+
+<span class="fc" id="L15">    private int [][] vBoard = new int[10][10];</span>
+
+    public int[][] getInBoard() {
+<span class="fc" id="L18">        return inBoard;</span>
+    }
+
+    public void setInBoard(int[][] inBoard) {
+<span class="fc" id="L22">        this.inBoard = inBoard;</span>
+<span class="fc" id="L23">    }</span>
+
+<span class="fc" id="L25">    private int [][] inBoard = new int[10][10];</span>
+
+    public boolean playMove()
+    {
+<span class="nc" id="L29">        Scanner sc= new Scanner(System.in);</span>
+<span class="nc" id="L30">        System.out.print(&quot;\nEnter Row Number: &quot;);</span>
+<span class="nc" id="L31">        int i= sc.nextInt();</span>
+<span class="nc" id="L32">        System.out.print(&quot;Enter Column Number: &quot;);</span>
+<span class="nc" id="L33">        int j= sc.nextInt();</span>
+
+<span class="nc bnc" id="L35" title="All 10 branches missed.">        if(i&lt;0 || i&gt;9 || j&lt;0 || j&gt;9 || vBoard[i][j]!=0)</span>
+        {
+<span class="nc" id="L37">            System.out.print(&quot;\nIncorrect Input!!&quot;);</span>
+<span class="nc" id="L38">            return true;</span>
+        }
+
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if(inBoard[i][j]==100)</span>
+        {
+<span class="nc" id="L43">            displayHidden();</span>
+<span class="nc" id="L44">            System.out.print(&quot;Oops! You stepped on a mine!\n============GAME OVER============&quot;);</span>
+<span class="nc" id="L45">            return false;</span>
+        }
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        else if(inBoard[i][j]==0)</span>
+        {
+<span class="nc" id="L49">            fixVisible(i, j);</span>
+        }
+        else
+        {
+<span class="nc" id="L53">            fixNeighbours(i, j);</span>
+        }
+
+<span class="nc" id="L56">        return true;</span>
+    }
+    public void init() {
+<span class="nc" id="L59">        System.out.println(&quot;WELCOME\n&quot;);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        for (int x = 0; x &lt; 9; x++) {</span>
+<span class="nc" id="L61">            Random r = new Random();</span>
+<span class="nc" id="L62">            int i = r.nextInt(6);</span>
+<span class="nc" id="L63">            int j = r.nextInt(6);</span>
+<span class="nc" id="L64">            inBoard [i][j] = 100;</span>
+<span class="nc" id="L65">            buildHidden();</span>
+            //System.out.println(&quot;i: &quot; + i + &quot; j: &quot; + j);
+            //
+        }
+        //System.out.println(inBoard.);
+<span class="nc" id="L70">    }</span>
+    public void buildHidden()
+    {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for(int i=0; i&lt;10; i++)</span>
+        {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            for(int j=0; j&lt;10; j++)</span>
+            {
+<span class="nc" id="L77">                int cnt=0;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                if(inBoard[i][j]!=100)</span>
+                {
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">                    if(i!=0)</span>
+                    {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                        if(inBoard[i-1][j]==100) cnt++;</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                        if(j!=0)</span>
+                        {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                            if(inBoard[i-1][j-1]==100) cnt++;</span>
+                        }
+
+                    }
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                    if(i!=9)</span>
+                    {
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                        if(inBoard[i+1][j]==100) cnt++;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                        if(j!=9)</span>
+                        {
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                            if(inBoard[i+1][j+1]==100) cnt++;</span>
+                        }
+                    }
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    if(j!=0)</span>
+                    {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                        if(inBoard[i][j-1]==100) cnt++;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                        if(i!=9)</span>
+                        {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                            if(inBoard[i+1][j-1]==100) cnt++;</span>
+                        }
+                    }
+<span class="nc bnc" id="L106" title="All 2 branches missed.">                    if(j!=9)</span>
+                    {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                        if(inBoard[i][j+1]==100) cnt++;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                        if(i!=0)</span>
+                        {
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                            if(inBoard[i-1][j+1]==100) cnt++;</span>
+                        }
+                    }
+
+<span class="nc" id="L115">                    inBoard[i][j] = cnt;</span>
+                }
+            }
+        }
+
+<span class="nc" id="L120">    }</span>
+    public void displayVisible()
+    {
+<span class="nc" id="L123">        System.out.print(&quot;\t &quot;);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        for(int i=0; i&lt;10; i++)</span>
+        {
+<span class="nc" id="L126">            System.out.print(&quot; &quot; + i + &quot;  &quot;);</span>
+        }
+<span class="nc" id="L128">        System.out.print(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for(int i=0; i&lt;10; i++)</span>
+        {
+<span class="nc" id="L131">            System.out.print(i + &quot;\t| &quot;);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for(int j=0; j&lt;10; j++)</span>
+            {
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                if(vBoard[i][j]==0)</span>
+                {
+<span class="nc" id="L136">                    System.out.print(&quot;*&quot;);</span>
+                }
+<span class="nc bnc" id="L138" title="All 2 branches missed.">                else if(vBoard[i][j]==50)</span>
+                {
+<span class="nc" id="L140">                    System.out.print(&quot; &quot;);</span>
+                }
+                else
+                {
+<span class="nc" id="L144">                    System.out.print(vBoard[i][j]);</span>
+                }
+<span class="nc" id="L146">                System.out.print(&quot; | &quot;);</span>
+            }
+<span class="nc" id="L148">            System.out.print(&quot;\n&quot;);</span>
+        }
+<span class="nc" id="L150">    }</span>
+    public void fixVisible(int i, int j)
+    {
+<span class="nc" id="L153">        vBoard[i][j] = 50;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        if(i!=0)</span>
+        {
+<span class="nc" id="L156">            vBoard[i-1][j] = inBoard[i-1][j];</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">            if(vBoard[i-1][j]==0) vBoard[i-1][j] = 50;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">            if(j!=0)</span>
+            {
+<span class="nc" id="L160">                vBoard[i-1][j-1] = inBoard[i-1][j-1];</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">                if(vBoard[i-1][j-1]==0) vBoard[i-1][j-1]=50;</span>
+
+            }
+        }
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if(i!=9)</span>
+        {
+<span class="nc" id="L167">            vBoard[i+1][j]=inBoard[i+1][j];</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            if(vBoard[i+1][j]==0) vBoard[i+1][j]=50;</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            if(j!=9)</span>
+            {
+<span class="nc" id="L171">                vBoard[i+1][j+1]= inBoard[i+1][j+1];</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">                if(vBoard[i+1][j+1]==0) vBoard[i+1][j+1] = 50;</span>
+            }
+        }
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if(j!=0)</span>
+        {
+<span class="nc" id="L177">            vBoard[i][j-1]=inBoard[i][j-1];</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if(vBoard[i][j-1]==0) vBoard[i][j-1] = 50;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            if(i!=9)</span>
+            {
+<span class="nc" id="L181">                vBoard[i+1][j-1]=inBoard[i+1][j-1];</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                if(vBoard[i+1][j-1]==0) vBoard[i+1][j-1] = 50;</span>
+            }
+        }
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        if(j!=9)</span>
+        {
+<span class="nc" id="L187">            vBoard[i][j+1]=inBoard[i][j+1];</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if(vBoard[i][j+1]==0) vBoard[i][j+1] = 50;</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            if(i!=0)</span>
+            {
+<span class="nc" id="L191">                vBoard[i-1][j+1]=inBoard[i-1][j+1];</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">                if(vBoard[i-1][j+1]==0) vBoard[i-1][j+1] = 50;</span>
+            }
+        }
+<span class="nc" id="L195">    }</span>
+
+    public void fixNeighbours(int i, int j)
+    {
+<span class="nc" id="L199">        Random random = new Random();</span>
+<span class="nc" id="L200">        int x = random.nextInt()%4;</span>
+
+<span class="nc" id="L202">        vBoard[i][j] = inBoard[i][j];</span>
+
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        if(x==0)</span>
+        {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">            if(i!=0)</span>
+            {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                if(inBoard[i-1][j]!=100)</span>
+                {
+<span class="nc" id="L210">                    vBoard[i-1][j] = inBoard[i-1][j];</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                    if(vBoard[i-1][j]==0)  vBoard[i-1][j] = 50;</span>
+                }
+            }
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            if(j!=0)</span>
+            {
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                if(inBoard[i][j-1]!=100)</span>
+                {
+<span class="nc" id="L218">                    vBoard[i][j-1] = inBoard[i][j-1];</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                    if(vBoard[i][j-1]==0)  vBoard[i][j-1] = 50;</span>
+                }
+
+            }
+<span class="nc bnc" id="L223" title="All 4 branches missed.">            if(i!=0 &amp;&amp; j!=0)</span>
+            {
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                if(inBoard[i-1][j-1]!=100)</span>
+                {
+<span class="nc" id="L227">                    vBoard[i-1][j-1] = inBoard[i-1][j-1];</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">                    if(vBoard[i-1][j-1]==0)  vBoard[i-1][j-1] = 50;</span>
+                }
+
+            }
+        }
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        else if(x==1)</span>
+        {
+<span class="nc bnc" id="L235" title="All 2 branches missed.">            if(i!=0)</span>
+            {
+<span class="nc bnc" id="L237" title="All 2 branches missed.">                if(inBoard[i-1][j]!=100)</span>
+                {
+<span class="nc" id="L239">                    vBoard[i-1][j] = inBoard[i-1][j];</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">                    if(vBoard[i-1][j]==0)  vBoard[i-1][j] = 50;</span>
+                }
+            }
+<span class="nc bnc" id="L243" title="All 2 branches missed.">            if(j!=9)</span>
+            {
+<span class="nc bnc" id="L245" title="All 2 branches missed.">                if(inBoard[i][j+1]!=100)</span>
+                {
+<span class="nc" id="L247">                    vBoard[i][j+1] = inBoard[i][j+1];</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">                    if(vBoard[i][j+1]==0)  vBoard[i][j+1] = 50;</span>
+                }
+
+            }
+<span class="nc bnc" id="L252" title="All 4 branches missed.">            if(i!=0 &amp;&amp; j!=9)</span>
+            {
+<span class="nc bnc" id="L254" title="All 2 branches missed.">                if(inBoard[i-1][j+1]!=100)</span>
+                {
+<span class="nc" id="L256">                    vBoard[i-1][j+1] = inBoard[i-1][j+1];</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">                    if(vBoard[i-1][j+1]==0)  vBoard[i-1][j+1] = 50;</span>
+                }
+            }
+        }
+<span class="nc bnc" id="L261" title="All 2 branches missed.">        else if(x==2)</span>
+        {
+<span class="nc bnc" id="L263" title="All 2 branches missed.">            if(i!=9)</span>
+            {
+<span class="nc bnc" id="L265" title="All 2 branches missed.">                if(inBoard[i+1][j]!=100)</span>
+                {
+<span class="nc" id="L267">                    vBoard[i+1][j] = inBoard[i+1][j];</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">                    if(vBoard[i+1][j]==0)  vBoard[i+1][j] = 50;</span>
+                }
+            }
+<span class="nc bnc" id="L271" title="All 2 branches missed.">            if(j!=9)</span>
+            {
+<span class="nc bnc" id="L273" title="All 2 branches missed.">                if(inBoard[i][j+1]!=100)</span>
+                {
+<span class="nc" id="L275">                    vBoard[i][j+1] = inBoard[i][j+1];</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">                    if(vBoard[i][j+1]==0)  vBoard[i][j+1] = 50;</span>
+                }
+
+            }
+<span class="nc bnc" id="L280" title="All 4 branches missed.">            if(i!=9 &amp;&amp; j!=9)</span>
+            {
+<span class="nc bnc" id="L282" title="All 2 branches missed.">                if(inBoard[i+1][j+1]!=100)</span>
+                {
+<span class="nc" id="L284">                    vBoard[i+1][j+1] = inBoard[i+1][j+1];</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                    if(vBoard[i+1][j+1]==0)  vBoard[i+1][j+1] = 50;</span>
+                }
+            }
+        }
+        else
+        {
+<span class="nc bnc" id="L291" title="All 2 branches missed.">            if(i!=9)</span>
+            {
+<span class="nc bnc" id="L293" title="All 2 branches missed.">                if(inBoard[i+1][j]!=100)</span>
+                {
+<span class="nc" id="L295">                    vBoard[i+1][j] = inBoard[i+1][j];</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">                    if(vBoard[i+1][j]==0)  vBoard[i+1][j] = 50;</span>
+                }
+            }
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            if(j!=0)</span>
+            {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">                if(inBoard[i][j-1]!=100)</span>
+                {
+<span class="nc" id="L303">                    vBoard[i][j-1] = inBoard[i][j-1];</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">                    if(vBoard[i][j-1]==0)  vBoard[i][j-1] = 50;</span>
+                }
+
+            }
+<span class="nc bnc" id="L308" title="All 4 branches missed.">            if(i!=9 &amp;&amp; j!=0)</span>
+            {
+<span class="nc bnc" id="L310" title="All 2 branches missed.">                if(inBoard[i+1][j-1]!=100)</span>
+                {
+<span class="nc" id="L312">                    vBoard[i+1][j-1] = inBoard[i+1][j-1];</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">                    if(vBoard[i+1][j-1]==0)  vBoard[i+1][j-1] = 50;</span>
+                }
+            }
+        }
+<span class="nc" id="L317">    }</span>
+    public void displayHidden()
+    {
+<span class="nc" id="L320">        System.out.print(&quot;\t &quot;);</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        for(int i=0; i&lt;10; i++)</span>
+        {
+<span class="nc" id="L323">            System.out.print(&quot; &quot; + i + &quot;  &quot;);</span>
+        }
+<span class="nc" id="L325">        System.out.print(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">        for(int i=0; i&lt;10; i++)</span>
+        {
+<span class="nc" id="L328">            System.out.print(i + &quot;\t| &quot;);</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">            for(int j=0; j&lt;10; j++)</span>
+            {
+<span class="nc bnc" id="L331" title="All 2 branches missed.">                if(inBoard[i][j]==0)</span>
+                {
+<span class="nc" id="L333">                    System.out.print(&quot; &quot;);</span>
+                }
+<span class="nc bnc" id="L335" title="All 2 branches missed.">                else if(inBoard[i][j]==100)</span>
+                {
+<span class="nc" id="L337">                    System.out.print(&quot;X&quot;);</span>
+                }
+                else
+                {
+<span class="nc" id="L341">                    System.out.print(inBoard[i][j]);</span>
+                }
+<span class="nc" id="L343">                System.out.print(&quot; | &quot;);</span>
+            }
+<span class="nc" id="L345">            System.out.print(&quot;\n&quot;);</span>
+        }
+<span class="nc" id="L347">    }</span>
+    public boolean checkResult()
+    {
+<span class="nc bnc" id="L350" title="All 2 branches missed.">        for(int i=0; i&lt;10; i++)</span>
+        {
+<span class="nc bnc" id="L352" title="All 2 branches missed.">            for(int j=0; j&lt;10; j++)</span>
+            {
+<span class="nc bnc" id="L354" title="All 2 branches missed.">                if(vBoard[i][j]==0)</span>
+                {
+<span class="nc bnc" id="L356" title="All 2 branches missed.">                    if(inBoard[i][j]!=100)</span>
+                    {
+<span class="nc" id="L358">                        return false;</span>
+                    }
+                }
+            }
+        }
+<span class="nc" id="L363">        return true;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
