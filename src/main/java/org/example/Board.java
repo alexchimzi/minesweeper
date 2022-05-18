@@ -118,6 +118,7 @@ public class Board {
         }
 
     }
+
     public void displayVisible()
     {
         System.out.print("\t ");
