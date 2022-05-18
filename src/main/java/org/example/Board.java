@@ -64,6 +64,7 @@ public class Board {
             inBoard [i][j] = 100;
             buildHidden();
             //System.out.println("i: " + i + " j: " + j);
+            //
         }
         //System.out.println(inBoard.);
     }
